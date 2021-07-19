@@ -17,14 +17,22 @@
     "node": "14.x",
     "npm": "7.x"
   },
+  "cacheDirectories": [
+    "build",
+    "node_modules"
+  ],
   "dependencies": {
-    "koa": "^2.13.1"
+    "db-migrate": "^0.11.12",
+    "db-migrate-pg": "^1.2.2",
+    "koa": "^2.13.1",
+    "koa-sslify": "^5.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "eslint": "^7.31.0",
+    "http-proxy-middleware": "^0.19.1",
     "prettier": "^2.3.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

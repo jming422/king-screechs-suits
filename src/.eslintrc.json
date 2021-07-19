@@ -1,0 +1,7 @@
+{
+  "extends": "react-app",
+  "rules": {
+    "no-unused-vars": ["error", { "varsIgnorePattern": "^_.", "argsIgnorePattern": "^_.", "ignoreRestSiblings": true }],
+    "semi": "warn"
+  }
+}
