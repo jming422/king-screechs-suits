@@ -1,0 +1,59 @@
+{
+  "name": "king-screechs-suits",
+  "version": "0.1.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jming422/king-screechs-suits.git"
+  },
+  "author": "Amber Lambie & Jonathan Ming",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/jming422/king-screechs-suits/issues"
+  },
+  "homepage": "https://github.com/jming422/king-screechs-suits#readme",
+  "type": "module",
+  "engines": {
+    "node": "14.x",
+    "npm": "7.x"
+  },
+  "dependencies": {
+    "koa": "^2.13.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "eslint": "^7.31.0",
+    "prettier": "^2.3.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "web-vitals": "^1.1.2"
+  },
+  "scripts": {
+    "start": "node ./server/index.js",
+    "start-frontend": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
