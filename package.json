@@ -11,7 +11,6 @@
   "bugs": {
     "url": "https://github.com/jming422/king-screechs-suits/issues"
   },
-  "homepage": "https://github.com/jming422/king-screechs-suits#readme",
   "type": "module",
   "engines": {
     "node": "14.x",
@@ -28,6 +27,7 @@
     "koa-bodyparser": "^4.3.0",
     "koa-logger": "^3.2.1",
     "koa-respond": "^2.1.0",
+    "koa-router": "^10.0.0",
     "koa-sslify": "^5.0.0",
     "koa-static": "^5.0.0"
   },
