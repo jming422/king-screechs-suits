@@ -25,18 +25,26 @@
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
     "koa": "^2.13.1",
-    "koa-sslify": "^5.0.0"
+    "koa-bodyparser": "^4.3.0",
+    "koa-logger": "^3.2.1",
+    "koa-respond": "^2.1.0",
+    "koa-sslify": "^5.0.0",
+    "koa-static": "^5.0.0"
   },
   "devDependencies": {
+    "@emotion/react": "^11.4.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "eslint": "^7.31.0",
+    "eslint-plugin-import": "^2.23.4",
     "http-proxy-middleware": "^0.19.1",
     "prettier": "^2.3.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "use-http": "^1.0.21",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -45,12 +53,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
