@@ -1,23 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+/** @jsxImportSource @emotion/react */
+
+import { css } from '@emotion/react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+  Route,
+} from 'react-router-dom';
+
+import Game from './views/Game.js';
+import Home from './views/Home.js';
+
+const appContainer = css`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const pageContainer = css`
+  width: 100%;
+  min-height: 25rem;
+  margin: 2rem 10%;
+`;
 
 export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div css={appContainer}>
+      <h1>King Screech's Suits</h1>
+      <Router>
+        <div css={pageContainer}>
+          <Switch>
+            <Route path="/play">
+              <Game />
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+            <Route>
+              <Redirect to="/" />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
     </div>
   );
 }

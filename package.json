@@ -49,8 +49,9 @@
   },
   "scripts": {
     "start": "node ./server/index.js",
-    "start-frontend": "react-scripts start",
+    "start-frontend": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
+    "migrate": "db-migrate",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

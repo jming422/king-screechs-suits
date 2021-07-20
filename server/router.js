@@ -16,11 +16,9 @@ async function serveIndexHtml(ctx) {
   return await send(ctx, 'build/index.html');
 }
 
-// const paths = ['/'];
-// frontend.get(paths, serveIndexHtml);
 frontend.get('(.*)', serveIndexHtml);
 
-// API routes are more specific and should come first. Frontend routes include a
+// API routes are more specific and should come first. Frontend router is a
 // catchall and should come last.
 router.use(api.routes(), api.allowedMethods());
 router.use(frontend.routes(), frontend.allowedMethods());
