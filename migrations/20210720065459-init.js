@@ -1,6 +1,6 @@
 'use strict';
 
-const defaultMigration = require('./default.js');
+const defaultMigration = require('./utils/default.js');
 
 exports.setup = defaultMigration.setup;
 exports._meta = defaultMigration._meta;
