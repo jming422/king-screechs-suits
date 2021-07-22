@@ -31,7 +31,11 @@ const { default: forceHttps, xForwardedProtoResolver: httpsResolver } = sslify;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+import myfun from 'kss-lib';
+
 export default async function main() {
+  console.log(`myfun res: ${myfun()}`);
+
   const app = new Koa();
   if (process.env.NODE_ENV !== 'development') {
     app.use(forceHttps({ resolver: httpsResolver }));

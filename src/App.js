@@ -11,6 +11,9 @@ import {
 import Game from './views/Game.js';
 import Home from './views/Home.js';
 
+import myfun from 'kss-lib';
+import { useEffect } from 'react';
+
 const appContainer = css`
   width: 100%;
   height: 100%;
@@ -27,6 +30,10 @@ const pageContainer = css`
 `;
 
 export default function App() {
+  useEffect(() => {
+    console.log(`myfun res: ${myfun()}`);
+  }, []);
+
   return (
     <div css={appContainer}>
       <Router>
