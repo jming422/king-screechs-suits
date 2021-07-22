@@ -23,17 +23,16 @@ const appContainer = css`
 const pageContainer = css`
   width: 100%;
   min-height: 25rem;
-  margin: 2rem 10%;
+  margin: 1rem 10%;
 `;
 
 export default function App() {
   return (
     <div css={appContainer}>
-      <h1>King Screech's Suits</h1>
       <Router>
         <div css={pageContainer}>
           <Switch>
-            <Route path="/play">
+            <Route path="/play/:code">
               <Game />
             </Route>
             <Route path="/">

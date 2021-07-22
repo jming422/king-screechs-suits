@@ -1,9 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
-import { css } from '@emotion/react';
+import { useParams } from 'react-router-dom';
 
-const container = css``;
+import * as cs from '../styles/common.js';
 
 export default function Game() {
-  return <div css={container}>Game</div>;
+  const { code } = useParams();
+
+  return <div css={[cs.column, { width: '100%' }]}> Game code: {code}</div>;
 }

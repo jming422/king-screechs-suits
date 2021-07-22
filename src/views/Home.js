@@ -10,7 +10,7 @@ import Start from './Start.js';
 export default function Home() {
   return (
     <div css={[cs.column, { width: '100%' }]}>
-      Home
+      <h1>King Screech's Suits</h1>
       <div css={[cs.row, { width: '100%' }]}>
         <Start />
         <Join />

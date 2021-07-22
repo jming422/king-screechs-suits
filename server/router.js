@@ -1,12 +1,17 @@
 import Router from 'koa-router';
 import send from 'koa-send';
 
+import games from './routes/games.js';
+
 // Index router
 const router = new Router();
 
 // API routes
 const api = new Router();
-api.prefix('/api/v1').get('/ping', (ctx) => ctx.ok('pong'));
+api
+  .prefix('/api/v1')
+  .get('/ping', (ctx) => ctx.ok('pong'))
+  .use('/game', ...games);
 
 // Frontend-serving routes
 const frontend = new Router();
