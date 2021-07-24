@@ -5,7 +5,7 @@ import camelcaseKeys from 'camelcase-keys';
 import * as db from '../db.js';
 
 /** All columns */
-// const COLS = ['code', 'state'];
+// const COLS = ['game_id', 'code', 'state'];
 
 /** Editable columns */
 const ECOLS = ['state'];
