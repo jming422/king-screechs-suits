@@ -10,12 +10,54 @@ import * as db from '../db.js';
 /** Editable columns */
 const ECOLS = ['state'];
 
-export async function create() {
-  const { rows } = await db.query(
-    'INSERT INTO games DEFAULT VALUES RETURNING *'
-  );
+export async function create(deckIds) {
+  return await db.txn(async (conn) => {
+    const {
+      rows: [game],
+    } = await conn.query('INSERT INTO games DEFAULT VALUES RETURNING *');
 
-  return camelcaseKeys(rows[0]);
+    if (!deckIds) {
+      const { rows } = await conn.query('SELECT deck_id FROM decks');
+      deckIds = rows.map(({ deck_id }) => deck_id);
+    }
+
+    if (deckIds.length) {
+      const values = [];
+      const r = db.replacementsHelper(values);
+      const gid = r(game.game_id);
+      await conn.query(
+        `INSERT INTO game_decks (game_id, deck_id)
+         VALUES ${deckIds.map((id) => `(${gid}, ${r(id)})`).join()}`,
+        values
+      );
+    }
+
+    return camelcaseKeys(game);
+  });
+}
+
+export async function join(gameId, playerName) {
+  return await db.txn(async (conn) => {
+    const { rows } = await conn.query(
+      'SELECT EXISTS(SELECT 1 FROM games WHERE game_id = $1)',
+      [gameId]
+    );
+    if (!rows[0]?.exists) return null;
+
+    const {
+      rows: [{ player_id: playerId }],
+    } = await conn.query(
+      'INSERT INTO players (name) VALUES ($1) RETURNING player_id',
+      [playerName]
+    );
+
+    await conn.query(
+      'INSERT INTO game_players (game_id, player_id) VALUES ($1, $2)',
+      [gameId, playerId]
+    );
+
+    return playerId;
+  });
 }
 
 export async function read(code) {

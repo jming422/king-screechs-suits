@@ -26,16 +26,13 @@ import Serve from 'koa-static';
 import sslify from 'koa-sslify';
 
 import router from './router.js';
+import initWss from './wsHandler.js';
 
 const { default: forceHttps, xForwardedProtoResolver: httpsResolver } = sslify;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-import myfun from 'kss-lib';
-
 export default async function main() {
-  console.log(`myfun res: ${myfun()}`);
-
   const app = new Koa();
   if (process.env.NODE_ENV !== 'development') {
     app.use(forceHttps({ resolver: httpsResolver }));
@@ -53,9 +50,15 @@ export default async function main() {
   const server = app.listen(port, () =>
     console.log(`listening on port ${port}`)
   );
+
+  await initWss(server);
+
   return server;
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  main();
+  main().catch((e) => {
+    console.error(`FATAL: ${e?.stack ?? e}`);
+    process.exit(1);
+  });
 }

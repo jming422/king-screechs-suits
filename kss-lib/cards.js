@@ -1,7 +1,7 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
+
 const types = [{ animal: '♣', nature: '♠', charm: '♥', magic: '♦' }];
 
-// eslint-disable-next-line no-unused-vars
 const example = {
   id: 1,
   name: 'King Screech',

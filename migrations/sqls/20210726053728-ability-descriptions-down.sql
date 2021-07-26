@@ -1,0 +1,2 @@
+ALTER TABLE abilities DROP COLUMN description;
+ALTER TABLE games ALTER COLUMN state DROP DEFAULT;
