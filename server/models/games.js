@@ -60,14 +60,23 @@ export async function join(gameId, playerName) {
   });
 }
 
-export async function read(code) {
-  const { rows } = await db.query('SELECT * FROM games WHERE code = $1', [
-    code,
-  ]);
+export async function read(code, conn) {
+  const { rows } = await (conn ?? db).query(
+    'SELECT * FROM games WHERE code = $1',
+    [code]
+  );
   return rows[0] ? camelcaseKeys(rows[0]) : null;
 }
 
-export async function update(code, updates) {
+export async function getById(gameId, conn) {
+  const { rows } = await (conn ?? db).query(
+    'SELECT * FROM games WHERE game_id = $1',
+    [gameId]
+  );
+  return rows[0] ? camelcaseKeys(rows[0]) : null;
+}
+
+export async function update(gameId, updates, conn) {
   const values = [];
   const r = db.replacementsHelper(values);
 
@@ -81,17 +90,18 @@ export async function update(code, updates) {
 
   if (!ups) return 0;
 
-  const { rowCount } = await db.query(
-    `UPDATE games SET ${ups} WHERE code = ${r(code)}`,
+  const { rowCount } = await (conn ?? db).query(
+    `UPDATE games SET ${ups} WHERE game_id = ${r(gameId)}`,
     values
   );
 
   return rowCount;
 }
 
-export async function del(code) {
-  const { rowCount } = await db.query('DELETE FROM games WHERE code = $1', [
-    code,
-  ]);
+export async function del(code, conn) {
+  const { rowCount } = await (conn ?? db).query(
+    'DELETE FROM games WHERE code = $1',
+    [code]
+  );
   return rowCount;
 }

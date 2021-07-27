@@ -16,6 +16,13 @@ const example = {
   ],
 };
 
+const basicExample = {
+  id: 'b1 through b52',
+  isBasic: true,
+  suit: 'heart, diamond, spade, club',
+  rank: 1, // 1 = ace, 13 = king
+};
+
 // Abilities
 // The ability 'Draw 2 basic cards, then discard 1 color card' can be represented as:
 const abilityExample = [
