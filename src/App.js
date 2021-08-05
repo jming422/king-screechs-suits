@@ -1,15 +1,16 @@
 /** @jsxImportSource @emotion/react */
 
-import { css } from '@emotion/react';
 import {
   BrowserRouter as Router,
-  Switch,
   Redirect,
   Route,
+  Switch,
 } from 'react-router-dom';
+import { css } from '@emotion/react';
+import { useState } from 'react';
 
-import Game from './views/Game.js';
-import Home from './views/Home.js';
+import Game from './views/Game';
+import Home from './views/Home';
 
 const appContainer = css`
   width: 100%;
@@ -27,16 +28,18 @@ const pageContainer = css`
 `;
 
 export default function App() {
+  const [gameMeta, setGameMeta] = useState();
+
   return (
     <div css={appContainer}>
       <Router>
         <div css={pageContainer}>
           <Switch>
             <Route path="/play/:code">
-              <Game />
+              <Game {...{ gameMeta }} />
             </Route>
             <Route path="/">
-              <Home />
+              <Home {...{ setGameMeta }} />
             </Route>
             <Route>
               <Redirect to="/" />

@@ -6,13 +6,15 @@ import * as db from './db.js';
 
 import * as gm from './models/games.js';
 
+// TODO IN THIS FILE I TREAT CARDS LIKE OBJECTS BUT THEY'RE REALLY JUST IDS - NEED TO LOOKUP CARD DETAILS WHEN NECESSARY
+
 // These functions are called in response to websocket messages. They must
 // validate whether the requested action is valid given the current game state.
 // If it isn't, they should return `false`. If it is, then they should compute
 // and commit the new game state to the database, and then return `true`.
 
 export async function resolveAbility(gameId, playerId, ability) {
-  const prevState = (await gm.getById(gameId)).state;
+  // todo
 }
 
 export async function resolveDraw(gameId, playerId, pile) {
@@ -66,7 +68,46 @@ export async function resolveDraw(gameId, playerId, pile) {
 }
 
 export async function resolveMatch(gameId, playerId, cardIds) {
-  const prevState = (await gm.getById(gameId)).state;
+  if (!cardIds?.length === 2) return false;
+  return await db.txn(async (conn) => {
+    const prevState = (await gm.getById(gameId, conn)).state;
+    if (
+      // Confirm the rules about this?
+      ['discarding', 'waiting', 'playing'].includes(
+        prevState.playerStates[playerId]
+      )
+    )
+      return false;
+
+    const [toMatch, newHand] = _.partition(
+      prevState.zones.players[playerId].hand,
+      ({ cardId }) => cardIds.includes(cardId)
+    );
+
+    if (
+      toMatch.length !== cardIds.length ||
+      toMatch.some(({ isBasic }) => isBasic)
+    ) {
+      // If the number of cards in hand that we're matching doesn't match the
+      // number of cards requested, then that means we were requested to match a
+      // card that wasn't in hand, or match a card with itself! This is invalid.
+      // So is trying to match a basic card.
+      return false;
+    }
+
+    const newState = _.cloneDeep(prevState);
+
+    // Each element of the matches zone is a 2-element array, so we're adding
+    // toMatch, which should be such a 2-element array, to this list WITHOUT
+    // spreading it.
+    const newMatches = [...prevState.zones.players[playerId].matches, toMatch];
+
+    newState.zones.players[playerId].hand = newHand;
+    newState.zones.players[playerId].matches = newMatches;
+
+    await gm.update(gameId, { state: newState }, conn);
+    return true;
+  }, 'SERIALIZABLE');
 }
 
 export async function resolveDiscard(gameId, playerId, cardIds) {
@@ -140,7 +181,7 @@ const exampleGameState = {
     players: {
       one: {
         hand: ['cards'],
-        matches: [],
+        matches: [['card1', 'card2']],
         reserve: [],
       },
     },

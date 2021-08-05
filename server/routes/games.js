@@ -8,6 +8,7 @@ gamesApi.post('/', async (ctx) => {
   const {
     request: { body },
   } = ctx;
+
   console.log('starting new game');
 
   const playerName = body?.playerName?.trim();
@@ -16,10 +17,10 @@ gamesApi.post('/', async (ctx) => {
     return ctx.badRequest('Must provide a player name');
   }
 
-  const game = await m.create();
+  const { game, cards } = await m.create();
   const playerId = await m.join(game.gameId, playerName);
 
-  return ctx.ok({ game, playerId });
+  return ctx.ok({ game, cards, playerId });
 });
 
 gamesApi.post('/join/:code', async (ctx) => {
@@ -40,8 +41,9 @@ gamesApi.post('/join/:code', async (ctx) => {
   if (game == null) return ctx.notFound('No game exists with this code');
 
   const playerId = await m.join(game.gameId, playerName);
+  const cards = await m.getCards(game.gameId);
 
-  return ctx.ok({ game, playerId });
+  return ctx.ok({ game, cards, playerId });
 });
 
 gamesApi.get('/:code', async (ctx) => {

@@ -91,10 +91,10 @@ export async function handleMessage(ws, msg, isBinary) {
 
   if (fn) {
     const resp = await fn(gameId, playerId, payload);
-    ws.send(JSON.stringify({ type: 'response', success: !!resp }));
+    ws.send(JSON.stringify({ event: 'response', success: !!resp }));
     if (resp) {
       wss.clients.forEach((c) =>
-        c.send(JSON.stringify({ type: 'gameStateUpdated' }))
+        c.send(JSON.stringify({ event: 'gameStateUpdated' }))
       );
     }
   }

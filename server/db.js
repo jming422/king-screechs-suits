@@ -2,7 +2,10 @@ import pg from 'pg';
 
 export const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: true },
+  ssl:
+    process.env.NODE_ENV === 'development'
+      ? undefined
+      : { rejectUnauthorized: true },
 });
 
 export function replacementsHelper(values) {
